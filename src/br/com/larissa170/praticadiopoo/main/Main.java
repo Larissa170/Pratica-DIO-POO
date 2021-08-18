@@ -2,6 +2,7 @@ package br.com.larissa170.praticadiopoo.main;
 
 import java.time.LocalDate;
 
+import br.com.larissa170.praticadiopoo.dominio.Conteudo;
 import br.com.larissa170.praticadiopoo.dominio.Curso;
 import br.com.larissa170.praticadiopoo.dominio.Mentoria;
 
