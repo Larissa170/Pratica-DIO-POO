@@ -2,6 +2,7 @@ package br.com.larissa170.praticadiopoo.dominio;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Dev {
@@ -10,11 +11,35 @@ public class Dev {
 	private Set<Conteudo> conteudosInscritos = new LinkedHashSet<>(); // só permite adicionar dados unicos 
 	private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();
 	
-	public void inscreverBootcamp(Bootcamp bootcamp) {}
+	public void inscreverBootcamp(Bootcamp bootcamp) {
+		
+		this.conteudosInscritos.addAll(bootcamp.getConteudos()); //adiciona todos os conteudos do bootCamp para conteudos inscritos
+		bootcamp.getDevsInscritos().add(this);
+		
+	}
 	
-	public void progredir() {}
+	public void progredir() {
+		
+		Optional<Conteudo>conteudo = this.conteudosInscritos.stream().findFirst();// pega o conteudo inscrito na ordem que foi inscrito
+		
+		if (conteudo.isPresent()) {
+			
+			this.conteudosConcluidos.add(conteudo.get());
+			this.conteudosInscritos.remove(conteudo.get());
+			
+		} else {
+			
+			System.err.println("Você não está matriculado em nenhum conteúdo.");
+		
+		}
+		
+	}
 	
-	public void calcularTotalXp() {}
+	public double calcularTotalXp() {
+		// pega cada conteudo concluido e soma o XP
+		return this.conteudosConcluidos.stream().mapToDouble(conteudo -> conteudo.calcularXp()).sum();
+		
+	}
 
 	public String getNome() {
 		return nome;
